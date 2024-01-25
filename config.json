@@ -1,0 +1,200 @@
+{
+  "imagePath": "./assets/imgs",
+  "images": [
+    "All-Dogs-Go-To-Heaven-1989.jpg",
+    "Amazon-Fulfillment.jpg",
+    "Bambi-1942.jpg",
+    "Betty-Boop-Snow-White-1933.jpg",
+    "Burial-iPhone-Like-Accessory.jpg",
+    "Burried-Alive.jpg",
+    "Couple-Burial-01.jpg",
+    "Couple-Burial-02.jpg",
+    "Couple-Burial-Harappa.jpg",
+    "Couple-Burial-Téviec.jpg",
+    "Couple-Coffin.jpg",
+    "Cuevas-de-las-Manos-01.jpg",
+    "Cuevas-de-las-Manos-02.jpg",
+    "Cuevas-de-las-Manos-03.jpg",
+    "Denisovan-Prehistoric-Graffiti.jpg",
+    "Dickinsonia-Oldest-Fossil-01.jpg",
+    "Dickinsonia-Oldest-Fossil-02.jpg",
+    "Diquís-Giant-Sphere.jpg",
+    "Egyptian-Mummy-CT-Scan-01.jpg",
+    "Egyptian-Mummy-CT-Scan-02.jpg",
+    "Egyptian-Mummy-CT-Scan-03.jpg",
+    "Egyptian-Mummy-CT-Scan-04.jpg",
+    "Egyptian-Mummy-CT-Scan-Tamut.jpg",
+    "Étienne-Louis-Boullée.jpg",
+    "Footprints-Engare-Sero.jpg",
+    "Footprints-North-America.jpg",
+    "Footprints-Pliocene-Laetoli.jpg",
+    "Fossil-Nokia.jpg",
+    "Haunted-House-1929-01.jpg",
+    "Haunted-House-1929-02.jpg",
+    "Haunted-House-1929-03.jpg",
+    "Human-Fossil-Teeth.jpg",
+    "Ice-Age-Burial-03.jpg",
+    "Kings-Hunt-Assurbanipal.jpg",
+    "Loyalty-Rihanna-Kendrick.jpg",
+    "Menkaure-Khamerernebty-01.jpg",
+    "Menkaure-Khamerernebty-02.jpg",
+    "Ötzi-The-Iceman.jpg",
+    "Peter-and-the-Wolf-1946.jpg",
+    "Piranesi-01.jpg",
+    "Piranesi-02.jpg",
+    "Piranesi-03.jpg",
+    "Piranesi-04.jpg",
+    "Pompeii-Fallen-Stone.jpg",
+    "Pompeii-Garden-Fugitives-01.jpg",
+    "Pompeii-Garden-Fugitives-02.jpg",
+    "Quest-for-Fire-1981.jpg",
+    "Shovel.jpg",
+    "Skull-Close-Up.jpg",
+    "Snake-Bird-Death.jpg",
+    "Swing-You-Sinners-1930-01.jpg",
+    "Swing-You-Sinners-1930-02.jpg",
+    "The-Crystal-Maiden.jpg",
+    "The-Skeleton-Dance-1929-01.jpg",
+    "The-Skeleton-Dance-1929-02.jpg",
+    "The-Skeleton-Dance-1929-03.jpg",
+    "Venus-de-Willendorf.jpg",
+    "Viking-Burial-01.jpg",
+    "Viking-Burial-02.jpg",
+    "Warner-Brothers-Bugs-Bunny.jpg",
+    "Work-Bitch-Britney-Spears.jpg",
+    "Zoroastrian-Towers-of-Silence.jpg"
+  ],
+  "colors": [
+    {
+      "id": "0",
+      "bg": "#000000",
+      "fg": "#FF0000",
+      "fg2": "#FFFFFF",
+      "l3": {
+        "color": "#000000",
+        "mode": "color"
+      }
+    },
+    {
+      "id": "1",
+      "bg": "#42FF00",
+      "fg": "#000000",
+      "l1": {
+        "color": "#FF0000",
+        "mode": "difference"
+      },
+      "l2": {
+        "color": "#0013C4",
+        "mode": "color-dodge"
+      }
+    },
+    {
+      "id": "2",
+      "bg": "#FF0000",
+      "fg": "#000000",
+      "l3": {
+        "color": "#000000",
+        "mode": "color"
+      }
+    },
+    {
+      "id": "3",
+      "bg": "#000000",
+      "fg": "#42FF00",
+      "l2": {
+        "color": "#FF0000",
+        "mode": "color-dodge"
+      },
+      "l3": {
+        "color": "#42FF00",
+        "mode": "color"
+      }
+    },
+    {
+      "id": "4",
+      "bg": "#FF0000",
+      "fg": "#FFFFFF",
+      "fg2": "#FFFFFF",
+      "l1": {
+        "color": "#8FFF00",
+        "mode": "difference"
+      },
+      "l3": {
+        "color": "#000000",
+        "mode": "color"
+      }
+    },
+    {
+      "id": "5",
+      "bg": "#865400",
+      "fg": "#FFD600",
+      "fg2": "#FFD600",
+      "l1": {
+        "color": "#4200FF",
+        "mode": "difference"
+      },
+      "l2": {
+        "color": "#FF0000",
+        "mode": "color-dodge"
+      },
+      "l3": {
+        "color": "#000000",
+        "mode": "color"
+      }
+    },
+    {
+      "id": "6",
+      "bg": "#FFFFFF",
+      "fg": "#000000",
+      "fg2": "#000000",
+      "l2": {
+        "color": "#0038FF",
+        "mode": "color-dodge"
+      },
+      "l3": {
+        "color": "#000000",
+        "mode": "color"
+      }
+    },
+    {
+      "id": "7",
+      "bg": "#0019FF",
+      "fg": "#05FF00",
+      "fg2": "#FF0000"
+    },
+    {
+      "id": "8",
+      "bg": "#000000",
+      "fg": "#FFFFFF",
+      "fg2": "#FFFFFF",
+      "l1": {
+        "color": "#00A3FF",
+        "mode": "difference"
+      },
+      "l2": {
+        "color": "#640000",
+        "mode": "color-dodge"
+      }
+    },
+    {
+      "id": "9",
+      "bg": "#000000",
+      "fg": "#FFFFFF"
+    },
+    {
+      "id": "soulbound",
+      "bg": "#000",
+      "fg": "#ffffff",
+      "fg2": "#000",
+      "bg2": "#ff0000",
+      "l1f": {
+        "color": "#ACACAC",
+        "mode": "exclusion"
+      },
+      "l3f": {
+        "color": "#ACACAC",
+        "mode": "color"
+      }
+    }
+  ]
+}
