@@ -57,10 +57,7 @@ async function getTokenIdFromTx(tx:ContractTransaction){
         }
         return t;
       },{transfered: null, minted: null})
-      .value()
-      // const eventData = events[0].args;
-      // console.log('eventsmapped', eventsmapped);
-
+      .value()      
       return eventsmapped;
 }
 
@@ -484,9 +481,7 @@ describe("Death Clock", function () {
         verifyingContract: deathClock.address,
         chainId: CHAIN_ID,
       };
-      const [owner, user1, user2] = await ethers.getSigners();
-      // console.log('A', voucherReset)
-      // console.log('AA', {...voucherReset, tokenId:mintedIds.minted})
+      const [owner, user1, user2] = await ethers.getSigners();      
       const v4=  {...voucherReset, tokenId:mintedIds.minted};
       const signedResetVoucher = await owner._signTypedData(domain, typesReset, v4 );
       const dcUser1 = (await deathClock.connect(user1)) as DeathClock;
@@ -530,32 +525,23 @@ describe("Death Clock", function () {
       signedOwnerResetVoucher = fixture.signedOwnerResetVoucher;
       voucherReset = fixture.voucherReset;
       expendedExpDate = fixture.expendedExpDate;
-      // console.log('q4')
       const mintTx = await deathClock.mintDeathClock(voucher, voucherSigned, { value: MINT_PRICE })
-      mintedIds = await getTokenIdFromTx(mintTx);
-      // console.log('aaa', mintedIds.minted);
+      mintedIds = await getTokenIdFromTx(mintTx);      
       const ttx = await deathClock.transferFrom(await owner.getAddress(), await user1.getAddress(), mintedIds.minted);
       transferedIds = await getTokenIdFromTx(ttx);
     });
 
-    it("Should return correct metadata minted", async () => {
-      // console.log('aaa2', mintedIds.minted)
+    it("Should return correct metadata minted", async () => {      
       const md = await deathClock.tokenURI(mintedIds.minted);
-      const jsonStr = Buffer.from(md.replace("data:application/json;base64,", ""), "base64").toString();
-      // console.log('>>b64 after mint', md.replace("data:application/json;base64,", ""));
-      // console.log('>>jsonStr after mint', jsonStr);
-      const json = JSON.parse(jsonStr);
-      // console.log('>>M', json)
+      const jsonStr = Buffer.from(md.replace("data:application/json;base64,", ""), "base64").toString();      
+      const json = JSON.parse(jsonStr);      
       await expect(true).to.be.eq(true);
     })
 
-    it("Should return correct metadata renmant", async () => {
-      // console.log('aaa2', transferedIds.minted);
+    it("Should return correct metadata renmant", async () => {      
       const md = await remnants.tokenURI(transferedIds.minted);
-      const jsonStr = Buffer.from(md.replace("data:application/json;base64,", ""), "base64").toString();
-      // console.log('>>jsonStr after renmant', jsonStr);
-      const json = JSON.parse(jsonStr);
-      // console.log('>>R', json)
+      const jsonStr = Buffer.from(md.replace("data:application/json;base64,", ""), "base64").toString();      
+      const json = JSON.parse(jsonStr);      
       await expect(true).to.be.eq(true);
     })
   });
@@ -609,8 +595,7 @@ describe("Death Clock", function () {
   describe("Remnants", function () {
     let deathClock, remnants, owner, user1, voucherSigned, voucher, deathClockId;
     const remnantId = 500;
-    beforeEach(async ()=>{
-      // console.log('setting up remnant test')
+    beforeEach(async ()=>{      
       const fixture = await deployDeathClockFixture();
       deathClock = fixture.deathClock;
       remnants = fixture.remnants;

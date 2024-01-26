@@ -118,7 +118,6 @@ contract DeathClockDesciptor is IDeathClockDescriptor, Ownable, MetadataGenerato
         if (isRemnant) {
             previewId = 9999; //renmant
         }
-        console.log("!!", tokenId, MAX_CLOCKS, isRemnant);
         return generateMetadataJSON(
             MetadataGenerator.metadataPayload(
                 tokenId,
