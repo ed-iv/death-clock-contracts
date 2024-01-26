@@ -7,6 +7,7 @@ interface IDeathClockDescriptor {
         uint8 tid;
         uint8 bid;
     }
+
     struct MetadataPayload {
         uint256 id;
         uint256 minted;

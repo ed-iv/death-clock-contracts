@@ -16,18 +16,18 @@ pragma solidity 0.8.16;
 //                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import './JsonWriter.sol';
-import './ERC721R.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
-import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
-import '@openzeppelin/contracts/utils/Counters.sol';
-import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
-import '@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol';
-import 'solmate/src/utils/SafeTransferLib.sol';
+import "./JsonWriter.sol";
+import "./ERC721R.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+import "solmate/src/utils/SafeTransferLib.sol";
 
-import { DeathClockRemnant } from './DeathClockRemnant.sol';
-import './IDeathClockDescriptor.sol';
-import './Whitelist.sol';
+import {DeathClockRemnant} from "./DeathClockRemnant.sol";
+import "./IDeathClockDescriptor.sol";
+import "./Whitelist.sol";
 
 error AmountMustBeNonZero();
 error CannotTransferRemnant();
@@ -59,8 +59,8 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
     using BitMaps for BitMaps.BitMap;
     using Counters for Counters.Counter;
 
-    string private constant SIGNING_DOMAIN = 'DeathVoucher';
-    string private constant SIGNATURE_VERSION = '1';
+    string private constant SIGNING_DOMAIN = "DeathVoucher";
+    string private constant SIGNATURE_VERSION = "1";
     uint256 private constant MINT_PRICE = 0.4321 ether;
     uint256 private constant MAX_CLOCKS = 500;
     Counters.Counter private _nextRemnantId;
@@ -79,7 +79,7 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
     bool public publicCanMint;
 
     constructor(address _deathWishSigner, address _descriptor)
-        ERC721r('DEATH CLOCK', 'DEATHCLOCK', MAX_CLOCKS)
+        ERC721r("DEATH CLOCK", "DEATHCLOCK", MAX_CLOCKS)
         EIP712(SIGNING_DOMAIN, SIGNATURE_VERSION)
     {
         deathWishSigner = _deathWishSigner;
@@ -106,10 +106,12 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
     }
 
     /// @notice Redeems a DeathWish for a Death Clock.
-    function mintDeathClock(
-        DeathWish calldata deathWish,
-        bytes memory signature
-    ) public payable ifPriceIsRight nonReentrant {
+    function mintDeathClock(DeathWish calldata deathWish, bytes memory signature)
+        public
+        payable
+        ifPriceIsRight
+        nonReentrant
+    {
         if (!publicCanMint) revert IncorrectMintPhase();
         _mintDeathClock(deathWish, signature);
     }
@@ -117,7 +119,7 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
     /// @notice Upon transfer, Death Clocks become eligible for a reset. This allows new
     /// owners to personalize their clocks accurately predict their deaths.
     function reset(DeathReassigment calldata deathWish, bytes memory signature) public {
-        if(!_exists(deathWish.tokenId)) revert NotMinted();
+        if (!_exists(deathWish.tokenId)) revert NotMinted();
         address signer = _verifyReassigment(deathWish, signature);
         if (signer != deathWishSigner) revert InvalidDeathWish();
         if (_usedVouchers[deathWish.accidentId]) revert DeathWishUsed();
@@ -131,26 +133,15 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
         canBeReset[deathWish.tokenId] = false;
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (string memory)
-    {
-        if (!_exists(tokenId) && _msgSender() != address(remnantContract))
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        if (!_exists(tokenId) && _msgSender() != address(remnantContract)) {
             revert NotMinted();
-        return
-            descriptor.getMetadataJSON(
-                IDeathClockDescriptor.MetadataPayload(
-                    tokenId,
-                    _mintDates[tokenId],
-                    expDates[tokenId],
-                    _remnants[tokenId],
-                    _resets[tokenId],
-                    _fds[tokenId]
-                )
-            );
+        }
+        return descriptor.getMetadataJSON(
+            IDeathClockDescriptor.MetadataPayload(
+                tokenId, _mintDates[tokenId], expDates[tokenId], _remnants[tokenId], _resets[tokenId], _fds[tokenId]
+            )
+        );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,9 +173,9 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
     }
 
     function withdraw() public onlyOwner {
-	      (bool success, ) = payable(msg.sender).call{value: address(this).balance}("");
-		    require(success);
-	}
+        (bool success,) = payable(msg.sender).call{value: address(this).balance}("");
+        require(success);
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     // INTERNALS & OVERRIDES                                                                           //
@@ -194,8 +185,8 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
         address signer = _verifyWish(deathWish, signature);
         if (signer != deathWishSigner) revert InvalidDeathWish();
         if (deathWish.deadman != _msgSender()) revert InvalidDeathWish();
-        require(_numAvailableTokens > 0, 'Max tokens amount reached');
-        if(_usedVouchers[deathWish.accidentId]) revert DeathWishUsed();
+        require(_numAvailableTokens > 0, "Max tokens amount reached");
+        if (_usedVouchers[deathWish.accidentId]) revert DeathWishUsed();
         _usedVouchers[deathWish.accidentId] = true;
         uint256 tokenId = _mintRandom(_msgSender(), 1);
         _fds[tokenId] = _msgSender();
@@ -203,34 +194,30 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
         _mintDates[tokenId] = block.timestamp * 1000;
     }
 
-    function _mintRemnant(uint256 deathClockTokenId, address to) internal returns (uint256) {
-        uint256 soulboundTokenId = MAX_CLOCKS + _nextRemnantId.current();
+    function _mintRemnant(uint256 deathClockTokenId, address to) internal returns (uint256 soulboundTokenId) {
+        soulboundTokenId = MAX_CLOCKS + _nextRemnantId.current();
         expDates[soulboundTokenId] = expDates[deathClockTokenId];
         _mintDates[soulboundTokenId] = _mintDates[deathClockTokenId];
         _fds[soulboundTokenId] = _fds[deathClockTokenId];
-        remnantContract.mintRemnant(to, soulboundTokenId);
         _nextRemnantId.increment();
         _remnants[deathClockTokenId] += 1;
-        return soulboundTokenId;
+        remnantContract.mintRemnant(to, soulboundTokenId);
     }
 
     /// @notice Returns a hash of the given DeathWish, prepared using EIP712 typed data hashing rules.
     /// @param deathWish An DeathWish to hash.
     function _hashWish(DeathWish calldata deathWish) internal view returns (bytes32) {
-        return
-            _hashTypedDataV4(
-                keccak256(
-                    abi.encode(
-                        keccak256(
-                            'DeathWish(uint256 minted,uint256 expDate,address deadman,uint256 accidentId)'
-                        ),
-                        deathWish.minted,
-                        deathWish.expDate,
-                        deathWish.deadman,
-                        deathWish.accidentId
-                    )
+        return _hashTypedDataV4(
+            keccak256(
+                abi.encode(
+                    keccak256("DeathWish(uint256 minted,uint256 expDate,address deadman,uint256 accidentId)"),
+                    deathWish.minted,
+                    deathWish.expDate,
+                    deathWish.deadman,
+                    deathWish.accidentId
                 )
-            );
+            )
+        );
     }
 
     /// @notice Verifies the signature for a given DeathWish, returning the address of the signer.
@@ -243,60 +230,44 @@ contract DeathClock is EIP712, ERC721r, Whitelist, Ownable, ReentrancyGuard {
 
     /// @notice Returns a hash of the given DeathWish, prepared using EIP712 typed data hashing rules.
     /// @param deathReassigment An DeathWish to hash.
-    function _hashReassigment(DeathReassigment calldata deathReassigment)
-        internal
-        view
-        returns (bytes32)
-    {
-        return
-            _hashTypedDataV4(
-                keccak256(
-                    abi.encode(
-                        keccak256(
-                            'DeathReassigment(uint256 expDate,uint256 tokenId,uint256 accidentId)'
-                        ),
-                        deathReassigment.expDate,
-                        deathReassigment.tokenId,
-                        deathReassigment.accidentId
-                    )
+    function _hashReassigment(DeathReassigment calldata deathReassigment) internal view returns (bytes32) {
+        return _hashTypedDataV4(
+            keccak256(
+                abi.encode(
+                    keccak256("DeathReassigment(uint256 expDate,uint256 tokenId,uint256 accidentId)"),
+                    deathReassigment.expDate,
+                    deathReassigment.tokenId,
+                    deathReassigment.accidentId
                 )
-            );
+            )
+        );
     }
 
     /// @notice Verifies the signature for a given DeathWish, returning the address of the signer.
     /// @dev Will revert if the signature is invalid. Does not verify signer is authorized to mint NFTs.
     /// @param deathReassigment An DeathWish describing an unminted NFT.
-    function _verifyReassigment(
-        DeathReassigment calldata deathReassigment,
-        bytes memory signature
-    ) internal view returns (address) {
+    function _verifyReassigment(DeathReassigment calldata deathReassigment, bytes memory signature)
+        internal
+        view
+        returns (address)
+    {
         bytes32 digest = _hashReassigment(deathReassigment);
         return ECDSA.recover(digest, signature);
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(ERC721r)
-        returns (bool)
-    {
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721r) returns (bool) {
         return ERC721r.supportsInterface(interfaceId);
     }
 
     /// @notice Override to mint remnant and enable new owner to reset clock. Each account is limited to
     /// reciept of one remnant for each Death Clock that passes through their hands.
-    function _afterTokenTransfer(
-        address from,
-        address,
-        uint256 tokenId
-    ) internal override {
+    function _afterTokenTransfer(address from, address, uint256 tokenId) internal override {
         if (from != address(0)) {
             // Skip initial mint
             canBeReset[tokenId] = true;
             if (!_remnantExists[from][tokenId]) {
-                _mintRemnant(tokenId, from);
                 _remnantExists[from][tokenId] = true;
+                _mintRemnant(tokenId, from);
             }
         }
     }

@@ -9,11 +9,9 @@ error Unauthorized();
 error NotMinted();
 
 contract DeathClockRemnant is ERC721 {
-
     IERC721Metadata private _deathClock;
 
-    constructor(address deathClock)
-        ERC721("Death Clock Remnants", "REMNANT") {
+    constructor(address deathClock) ERC721("Death Clock Remnants", "REMNANT") {
         _deathClock = IERC721Metadata(deathClock);
     }
 
@@ -23,7 +21,7 @@ contract DeathClockRemnant is ERC721 {
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        if(_ownerOf[tokenId] == address(0)) revert NotMinted();
+        if (_ownerOf[tokenId] == address(0)) revert NotMinted();
         return _deathClock.tokenURI(tokenId);
     }
 
